@@ -45,10 +45,17 @@ async function deployGoerli() {
 
   // set up
   // script para verificacion del contrato
+
+  // bbitesToken contract
+  const bbitesToken = await deploySC("BBITESToken")
+
+  var impBT = await printAddress("BBITESToken", await bbitesToken.getAddress())
+
+  await verify(impBT, "BBITESToken")
 }
 
-deployMumbai()
-  // deployGoerli()
+// deployMumbai()
+deployGoerli()
   //
   .catch((error) => {
     console.error(error);
