@@ -1,1 +1,44 @@
-{"name":"MOCHE#331","description":"Escoger un nombre para tu colección","image": "ipfs://[enter the CID here]/331.png","attributes":[{"trait_type":"MANTO","value":"MANTO COSTA"},{"trait_type":"BANCO","value":"HUACO"},{"trait_type":"CUY","value":"CUY HIELO"},{"trait_type":"CHULLO","value":"CHULLO PESCADOR"},{"trait_type":"CARA","value":"OJOS BASE"}]}
+{
+  "name": "MOCHE#331 - Raro",
+  "description": "The Cuy NFT Collection features ancient Peruvian cuy-themed artworks that belong to the Moche culture.",
+  "image": "ipfs://QmWJ3udcvB2XjvgWjcn8YrC7w8VEL2VWaUMq1x6Ns4t29k/331.png",
+  "attributes": [
+    {
+      "trait_type": "MANTO",
+      "value": "MANTO COSTA"
+    },
+    {
+      "trait_type": "BANCO",
+      "value": "HUACO"
+    },
+    {
+      "trait_type": "CUY",
+      "value": "CUY HIELO"
+    },
+    {
+      "trait_type": "CHULLO",
+      "value": "CHULLO PESCADOR"
+    },
+    {
+      "trait_type": "CARA",
+      "value": "OJOS BASE"
+    },
+    {
+      "trait_type": "Family",
+      "value": "Raro"
+    },
+    {
+      "trait_type": "Size",
+      "value": "276 x 372"
+    },
+    {
+      "trait_type": "Level",
+      "value": 2
+    },
+    {
+      "display_type": "date",
+      "trait_type": " Birthday",
+      "value": 1696032000
+    }
+  ]
+}

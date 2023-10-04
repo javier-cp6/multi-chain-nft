@@ -1,7 +1,7 @@
 {
-  "name": "MOCHE#1818",
-  "description": "Escoger un nombre para tu colección",
-  "image": "ipfs://[enter the CID here]/1818.png",
+  "name": "MOCHE#1818 - Whitelist",
+  "description": "The Cuy NFT Collection features ancient Peruvian cuy-themed artworks that belong to the Moche culture.",
+  "image": "ipfs://QmWJ3udcvB2XjvgWjcn8YrC7w8VEL2VWaUMq1x6Ns4t29k/1818.png",
   "attributes": [
     {
       "trait_type": "MANTO",
@@ -22,6 +22,23 @@
     {
       "trait_type": "CARA",
       "value": "OJOS BASE"
+    },
+    {
+      "trait_type": "Family",
+      "value": "Whitelist"
+    },
+    {
+      "trait_type": "Size",
+      "value": "276 x 372"
+    },
+    {
+      "trait_type": "Level",
+      "value": 5
+    },
+    {
+      "display_type": "date",
+      "trait_type": " Birthday",
+      "value": 1696032000
     }
   ]
 }

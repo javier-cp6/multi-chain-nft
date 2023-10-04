@@ -45,7 +45,7 @@ contract CuyCollectionNft is
     }
 
     function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://QmTWvm55znTX6NmgopdUpJX8CJsNzhGJY4bJVmMvoJP5hA/";
+        return "ipfs://QmWJ3udcvB2XjvgWjcn8YrC7w8VEL2VWaUMq1x6Ns4t29k/";
     }
 
     function safeMint(
