@@ -65,10 +65,13 @@ contract CuyCollectionNft is
         uint256 tokenId,
         bytes32[] calldata proofs
     ) public whenNotPaused {
+        require(to == msg.sender, "Token recipient must be the same as the sender");
+
         require(
             tokenId >= 1000 && tokenId <= 1999,
             "Token ID out of range"
         );
+        
         require(
             verifyMerkleProof(_hashToken(to, tokenId), proofs),
             "Not authorized to mint token."
@@ -124,14 +127,14 @@ contract CuyCollectionNft is
     function verifyMerkleProof(
         bytes32 leaf,
         bytes32[] memory proofs
-    ) public view returns (bool) {
+    ) internal view returns (bool) {
         return MerkleProof.verify(proofs, root, leaf);
     }
 
     function _hashToken(
         address to,
         uint256 tokenId
-    ) public pure returns (bytes32) {
+    ) internal pure returns (bytes32) {
         return keccak256(abi.encodePacked(tokenId, to));
     }
 
