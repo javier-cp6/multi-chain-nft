@@ -43,9 +43,9 @@ contract CuyCollectionNft is
         _grantRole(MINTER_ROLE, msg.sender);
         _grantRole(UPGRADER_ROLE, msg.sender);
     }
-
+    // updated with metadata folder's CID
     function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://QmWJ3udcvB2XjvgWjcn8YrC7w8VEL2VWaUMq1x6Ns4t29k/";
+        return "ipfs://QmVNPCWFZR7vakxLt8jrVzAKmtVnj4xBt2ipLPmUT5ACpA/"; 
     }
 
     function safeMint(
