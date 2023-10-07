@@ -9,8 +9,8 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 
-/// @custom:security-contact javiercastillopena@gmail.com
-contract CuyCollectionNft is 
+/// @custom:security-contact
+contract CuyCollectionNft is
     Initializable,
     ERC721Upgradeable,
     PausableUpgradeable,
@@ -32,7 +32,7 @@ contract CuyCollectionNft is
     }
     
     function initialize() initializer public {
-        __ERC721_init("Cuy Collection Nft", "CUYCOLL");
+        __ERC721_init("Cuy Collection Nft", "CUYNFT");
         __Pausable_init();
         __AccessControl_init();
         __ERC721Burnable_init();

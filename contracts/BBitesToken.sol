@@ -8,7 +8,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUp
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-/// @custom:security-contact javiercastillopena@gmail.com
+/// @custom:security-contact 
 contract BBITESToken is 
     Initializable, 
     ERC20Upgradeable, 
