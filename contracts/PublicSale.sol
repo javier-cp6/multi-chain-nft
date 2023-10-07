@@ -105,9 +105,8 @@ contract PublicSale is
         path[0] = address(usdc);
         path[1] = address(bbToken);
 
-        // TODO
-        // address origenToken = path[0];
-        // IERC20(origenToken).approve(routerAddress, amountIn);
+        // approve from PublicSale to Uniswap V2 Router
+        usdc.approve(address(router), _amountIn);
 
         //swap USDC for BBTKN
         uint256[] memory _amounts = router.swapTokensForExactTokens(
@@ -118,7 +117,7 @@ contract PublicSale is
             (block.timestamp + 300)
         );
 
-        uint256 _usdcChange = _amounts[0] - _amountIn;
+        uint256 _usdcChange = _amountIn - _amounts[0];
 
         require(bbToken.transferFrom(msg.sender, address(this), _amounts[1]), "Token transfer failed");
         require(usdc.transfer(msg.sender, _usdcChange), "USDC Token transfer failed");

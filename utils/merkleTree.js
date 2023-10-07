@@ -31,7 +31,7 @@ function getRootFromMT() {
 var hashedToken, proofs;
 function buildProofs() {
   var tokenId = 1000;
-  var account = "0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db";
+  var account = "0xC840F562D9F69b46b4227003E01525CB99344B72";
   hashedToken = hashToken(tokenId, account);
   proofs = merkleTree.getHexProof(hashedToken);
   console.log(proofs);
@@ -57,8 +57,8 @@ async function main() {
   await merkleTreeContract.safeMintWhiteList(account, tokenId, proofs);
 }
 
-getRootFromMT();
-buildProofs();
+// getRootFromMT();
+// buildProofs();
 // main();
 
 module.exports = { getRootFromMT };

@@ -32,7 +32,7 @@ contract CuyCollectionNft is
     }
     
     function initialize() initializer public {
-        __ERC721_init("Cuy Collection Nft", "CUYNFT");
+        __ERC721_init("Cuy Collection NFT", "CUYNFT");
         __Pausable_init();
         __AccessControl_init();
         __ERC721Burnable_init();

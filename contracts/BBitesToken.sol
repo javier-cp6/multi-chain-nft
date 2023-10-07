@@ -27,10 +27,10 @@ contract BBITESToken is
     }
 
     function initialize() initializer public {
-        __ERC20_init("BBITES Token", "BBTKN");
+        __ERC20_init("BBITES token", "BBTKN");
         __Pausable_init();
         __AccessControl_init();
-        __ERC20Permit_init("BBITES Token");
+        __ERC20Permit_init("BBITES token");
         __UUPSUpgradeable_init();
         _mint(msg.sender, 1000000 * 10 ** decimals());
 

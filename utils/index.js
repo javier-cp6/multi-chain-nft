@@ -4,6 +4,7 @@ const gcf = hre.ethers.getContractFactory;
 const dp = hre.upgrades.deployProxy;
 const pEth = hre.ethers.parseEther;
 const dc = hre.ethers.deployContract;
+const up = hre.upgrades.upgradeProxy;
 
 function getRole(role) {
   return hre.ethers.keccak256(hre.ethers.toUtf8Bytes(role));
@@ -23,6 +24,20 @@ async function verify(implementation, contractName, arguments = []) {
   try {
     await hre.run("verify:verify", {
       address: implementation,
+      constructorArguments: [...arguments],
+    });
+  } catch (e) {
+    if (e.message.includes("Contract source code already verified"))
+      console.log(`${contractName} is verified already`);
+    else console.error(`Error veryfing - ${contractName}`, e);
+  }
+}
+
+async function verifyNoUp(contract, contractName, arguments = []) {
+  if (!process.env.HARDHAT_NETWORK) return;
+  try {
+    await hre.run("verify:verify", {
+      address: await contract.getAddress(),
       constructorArguments: [...arguments],
     });
   } catch (e) {
@@ -67,12 +82,25 @@ async function deploySCNoUp(contractName, args = []) {
   return smartContract;
 }
 
+async function upgradeSC(contractName, proxyAddress, args = []) {
+  var contract = await gcf(contractName);
+  var proxyContract = await up(proxyAddress, contract);
+  
+  if (process.env.HARDHAT_NETWORK) {
+    await proxyContract.deployTransaction.wait(5);
+  
+  return proxyContract;
+  }
+}
+
 module.exports = {
   ex,
   verify,
+  verifyNoUp,
   getRole,
   printAddress,
   deploySC,
   deploySCNoUp,
   pEth,
+  upgradeSC
 };
