@@ -22,7 +22,7 @@ contract CuyCollectionNft is
     bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    bytes32 public root;
+    bytes32 root;
 
     event Burn(address account, uint256 id);
 
@@ -73,7 +73,7 @@ contract CuyCollectionNft is
         );
         
         require(
-            verifyMerkleProof(_hashToken(to, tokenId), proofs),
+            _verifyMerkleProof(_hashToken(to, tokenId), proofs),
             "Not authorized to mint token."
         );
         _safeMint(to, tokenId);
@@ -91,6 +91,31 @@ contract CuyCollectionNft is
         _burn(id);
 
         emit Burn(_msgSender(), id);
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    /////////                    Helper Methods                    /////////
+    ////////////////////////////////////////////////////////////////////////
+    function getRoot() public view onlyRole(UPGRADER_ROLE) returns (bytes32) {
+        return root;
+    }
+
+    function setRoot(bytes32 _root) public onlyRole(UPGRADER_ROLE) {
+        root = _root;
+    }
+
+    function _verifyMerkleProof(
+        bytes32 leaf,
+        bytes32[] memory proofs
+    ) internal view returns (bool) {
+        return MerkleProof.verify(proofs, root, leaf);
+    }
+
+    function _hashToken(
+        address to,
+        uint256 tokenId
+    ) internal pure returns (bytes32) {
+        return keccak256(abi.encodePacked(tokenId, to));
     }
 
     function pause() public onlyRole(PAUSER_ROLE) {
@@ -122,23 +147,10 @@ contract CuyCollectionNft is
     }
 
     ////////////////////////////////////////////////////////////////////////
-    /////////                    Helper Methods                    /////////
+    /////////                    Version                           /////////
     ////////////////////////////////////////////////////////////////////////
-    function verifyMerkleProof(
-        bytes32 leaf,
-        bytes32[] memory proofs
-    ) internal view returns (bool) {
-        return MerkleProof.verify(proofs, root, leaf);
-    }
 
-    function _hashToken(
-        address to,
-        uint256 tokenId
-    ) internal pure returns (bytes32) {
-        return keccak256(abi.encodePacked(tokenId, to));
-    }
-
-    function setRoot(bytes32 _root) public onlyRole(UPGRADER_ROLE) {
-        root = _root;
+    function version() public pure returns (uint256) {
+        return 2;
     }
 }

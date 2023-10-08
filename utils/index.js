@@ -83,8 +83,8 @@ async function deploySCNoUp(contractName, args = []) {
 }
 
 async function upgradeSC(contractName, proxyAddress, args = []) {
-  var contract = await gcf(contractName);
-  var proxyContract = await up(proxyAddress, contract);
+  var smartContract = await gcf(contractName);
+  var proxyContract = await up(proxyAddress, smartContract);
   
   if (process.env.HARDHAT_NETWORK) {
     await proxyContract.deployTransaction.wait(5);
