@@ -69,14 +69,12 @@ async function deployGoerliPS() {
   // PublicSale contract requires uniswap router address 
   const bbAdd = "0x0157fa3e2C2D186b761eEd4871CB2440faCB9DB2";
   const usdcAdd = "0xeB5093BB51C195D942c4E13d78CC80ffb471357B";
-  const routerAddress = "0x82BAe957198fd93281DCB774c6bF9e7d4B2289AC";
 
   const psContract = await deploySC(
     "PublicSale", 
     [
       bbAdd,
-      usdcAdd,
-      routerAddress 
+      usdcAdd
     ]
   )
   const impPs = await printAddress("PublicSale", await psContract.getAddress())
@@ -84,8 +82,8 @@ async function deployGoerliPS() {
 }
 
 async function upgrade() {
-  const contractName = "CuyCollectionNft";
-  const proxyAddress = "0x541f9FC8C0b54D3e4C2878C4d584E385bD09BEaa";
+  const contractName = "PublicSale";
+  const proxyAddress = "0xEC9DFBcbe0c17032eF9286b58881248f7ba8A5F4";
 
   const psContract = await upgradeSC(contractName, proxyAddress);
   const newImp = await printAddress(contractName, await psContract.getAddress())

@@ -26,6 +26,9 @@ contract PublicSale is
     bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
     bytes32 public constant EXECUTER_ROLE = keccak256("EXECUTER_ROLE");
 
+    address constant UNISWAP_V2_ROUTER =
+        0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
+
     // 00 horas del 30 de septiembre del 2023 GMT
     uint256 constant startDate = 1696032000;
 
@@ -39,7 +42,7 @@ contract PublicSale is
         _disableInitializers();
     }
 
-    function initialize(address _bbToken, address _usdc, address _routerAddress) initializer public {
+    function initialize(address _bbToken, address _usdc) initializer public {
         __ERC20Pausable_init();
         __AccessControl_init();
         __UUPSUpgradeable_init();
@@ -51,7 +54,7 @@ contract PublicSale is
 
         bbToken = IERC20Upgradeable(_bbToken);
         usdc = IERC20(_usdc);
-        router = IUniSwapV2Router02(_routerAddress);
+        router = IUniSwapV2Router02(UNISWAP_V2_ROUTER);
     }
 
     function _getNftPrice(uint256 _id) internal view returns(uint256) {
@@ -98,29 +101,29 @@ contract PublicSale is
 
         // receive usdc
         require(usdc.transferFrom(msg.sender, address(this), _amountIn), "USDC token transfer failed");
-        
+
+        // approve from PublicSale to Uniswap V2 Router
+        usdc.approve(address(router), _amountIn);
+
         uint256 _price = _getNftPrice(_id);
+        uint deadline = block.timestamp + 300;
         
         address[] memory path = new address[](2);
         path[0] = address(usdc);
         path[1] = address(bbToken);
 
-        // approve from PublicSale to Uniswap V2 Router
-        usdc.approve(address(router), _amountIn);
-
-        //swap USDC for BBTKN
-        uint256[] memory _amounts = router.swapTokensForExactTokens(
+        //swap USDC to BBTKN
+        uint[] memory _amounts = router.swapTokensForExactTokens(
             _price,
             _amountIn,
             path,
             address(this),
-            (block.timestamp + 300)
+            deadline
         );
 
-        uint256 _usdcChange = _amountIn - _amounts[0];
-
-        require(bbToken.transferFrom(msg.sender, address(this), _amounts[1]), "Token transfer failed");
-        require(usdc.transfer(msg.sender, _usdcChange), "USDC Token transfer failed");
+        if (_amounts[0] < _amountIn) {
+            require(usdc.transfer(msg.sender, _amountIn - _amounts[0]), "USDC Token transfer failed");
+        }
 
         emit PurchaseNftWithId(msg.sender, _id);
     }
@@ -175,5 +178,13 @@ contract PublicSale is
         uint256 value
     ) internal override(ERC20Upgradeable, ERC20PausableUpgradeable) whenNotPaused {
         super._beforeTokenTransfer(from, to, value);
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    /////////                    Version                           /////////
+    ////////////////////////////////////////////////////////////////////////
+
+    function version() public pure returns (uint256) {
+        return 15;
     }
 }
