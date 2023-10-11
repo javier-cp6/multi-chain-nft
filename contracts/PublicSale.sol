@@ -35,6 +35,12 @@ contract PublicSale is
     // Maximo price NFT
     uint256 constant MAX_PRICE_NFT = 90_000 * 10 ** 18;
 
+    // Mapping from token ID to owner address
+    mapping(uint256 => address) private _owners;
+
+    // Mapping owner address to token count
+    mapping(address => uint256) private _balances;
+
     event PurchaseNftWithId(address account, uint256 id);
 
     /// @custom:oz-upgrades-unsafe-allow constructor
@@ -87,8 +93,13 @@ contract PublicSale is
     function purchaseWithTokens(uint256 _id) public {
         require(_id >= 0 && _id <= 699, "Invalid NFT ID");
 
+        require(_owners[_id] == address(0), "Token already owned");
+
         uint256 _price = _getNftPrice(_id);
         require(bbToken.transferFrom(msg.sender, address(this), _price), "Token transfer failed");
+
+        _owners[_id] = msg.sender;
+        _balances[msg.sender] += 1;
 
         emit PurchaseNftWithId(msg.sender, _id);
     }
@@ -98,6 +109,8 @@ contract PublicSale is
         // llama a swapTokensForExactTokens: valor de retorno de este metodo es cuanto gastaste del token input
         // transfiere el excedente de USDC a msg.sender
         require(_id >= 0 && _id <= 699, "Invalid NFT ID");
+
+        require(_owners[_id] == address(0), "Token already owned");
 
         // receive usdc
         require(usdc.transferFrom(msg.sender, address(this), _amountIn), "USDC token transfer failed");
@@ -125,15 +138,23 @@ contract PublicSale is
             require(usdc.transfer(msg.sender, _amountIn - _amounts[0]), "USDC Token transfer failed");
         }
 
+        _owners[_id] = msg.sender;
+        _balances[msg.sender] += 1;
+
         emit PurchaseNftWithId(msg.sender, _id);
     }
 
     function purchaseWithEtherAndId(uint256 _id) public payable {
         require(_id >= 700 && _id <= 999, "Invalid NFT ID");
 
+        require(_owners[_id] == address(0), "Token already owned");
+
         uint256 _price = _getNftPrice(_id);
 
         require(msg.value == _price, "Insuffient ether");
+
+        _owners[_id] = msg.sender;
+        _balances[msg.sender] += 1;
 
         emit PurchaseNftWithId(msg.sender, _id);
     }
@@ -141,11 +162,26 @@ contract PublicSale is
     function depositEthForARandomNft() public payable {
         uint256 _id = _getRandom700To999();
 
+        require(_owners[_id] == address(0), "Token already owned");
+
         uint256 _price = _getNftPrice(_id);
 
         require(msg.value == _price, "Insuffient ether");
 
+        _owners[_id] = msg.sender;
+        _balances[msg.sender] += 1;
+
         emit PurchaseNftWithId(msg.sender, _id);
+    }
+
+    function ownerOf(uint256 _id) public view returns (address) {
+        require(_owners[_id] != address(0), "Invalid token ID");
+        return _owners[_id];
+    }
+
+    function nftBalanceOf(address _owner) public view returns (uint256) {
+        require(_owner != address(0), "Address zero is not a valid owner");
+        return _balances[_owner];
     }
 
     receive() external payable {
@@ -185,6 +221,6 @@ contract PublicSale is
     ////////////////////////////////////////////////////////////////////////
 
     function version() public pure returns (uint256) {
-        return 15;
+        return 16;
     }
 }
