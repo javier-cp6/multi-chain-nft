@@ -24,7 +24,7 @@ exports.handler = async function (data) {
   var bbTokenAdd = "0x0157fa3e2C2D186b761eEd4871CB2440faCB9DB2";
   var tokenAbi = ["function mint(address to, uint256 amount)"];
   var tokenContract = new ethers.Contract(bbTokenAdd, tokenAbi, signer);
-  const amount = ethers.parseEther("10000");
+  const amount = ethers.utils.parseEther("10000");
   var tx = await tokenContract.mint(account, amount);
   var res = await tx.wait();
 
