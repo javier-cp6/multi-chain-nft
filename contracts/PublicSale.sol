@@ -184,6 +184,13 @@ contract PublicSale is
         return _balances[_owner];
     }
 
+    function getPriceForId(uint256 _nftId) public view returns(uint256) {
+        require(_nftId >= 0 && _nftId <= 699, "Invalid NFT ID");
+
+        require(_owners[_nftId] == address(0), "Token already owned");
+        return _getNftPrice(_nftId);
+    }
+
     receive() external payable {
         depositEthForARandomNft();
     }
@@ -221,6 +228,6 @@ contract PublicSale is
     ////////////////////////////////////////////////////////////////////////
 
     function version() public pure returns (uint256) {
-        return 16;
+        return 17;
     }
 }
