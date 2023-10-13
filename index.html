@@ -12,11 +12,11 @@
     <div>
         <h2>Log In</h2>
         <button id="connect">Conectar con Metamask</button>
-        <div>Connectada con cuenta: <span id="walletId"></span></div>
+        <div>Conectada con cuenta: <span id="walletId"></span></div>
     </div>
 
     </br>
-    <h2>Balances de USDC y BBTKN</h2>
+    <h2>Balances de USDC y BBTKN en Goerli</h2>
     <div>
         <label for="usdcBalance">USD Coin Balance:</label>
         <span id="usdcBalance"></span>
@@ -29,9 +29,22 @@
     </div>
     </br>
 
+    <h2>Allowance de USDC y BBTKN en Goerli</h2>
+    <div>
+        <label for="usdcAllowance">USD Coin Balance:</label>
+        <span id="usdcAllowance"></span>
+        <button id="usdcAllowanceBbtn">Refresh</button>
+    </div>
+    <div>
+        <label for="bbitesTknAllowance">BBites Token Balance:</label>
+        <span id="bbitesTknAllowance"></span>
+        <button id="bbitesTknAllowanceBbtn">Refresh</button>
+    </div>
+    </br>
+
     <h2>Approves (USDC y BBToken) en Goerli</h2>
     <div>
-        <label for="approveInput">Approve BBites Token a Public Sale</label>
+        <label for="approveInput">Approve BBites Token a Public Sale (wei)</label>
         <input type="text" id="approveInput" name="approveInput" placeholder="# BBtokens to approve">
         <button id="approveButtonBBTkn">Approve</button>
         <span id="approveError" style="color: red;"></span>
@@ -39,7 +52,7 @@
 
     </br>
     <div>
-        <label for="approveInputUSDC">Approve USDC a Public Sale</label>
+        <label for="approveInputUSDC">Approve USDC a Public Sale (wei)</label>
         <input type="text" id="approveInputUSDC" name="approveInputUSDC" placeholder="# USDC to approve">
         <button id="approveButtonUSDC">Approve</button>
         <span id="approveErrorUSDC" style="color: red;"></span>
@@ -58,7 +71,7 @@
     <div>
         <label for="purchaseInputUSDC">Purchase By Id with USDC (0 - 699)</label>
         <input type="number" id="purchaseInputUSDC" name="purchaseInputUSDC" placeholder="NFT id">
-        <input type="number" id="amountInUSDCInput" name="amountInUSDCInput" placeholder="UDSC amount in">
+        <input type="number" id="amountInUSDCInput" name="amountInUSDCInput" placeholder="UDSC (wei) amount in">
         <button id="purchaseButtonUSDC">Purchase</button>
         <span id="purchaseErrorUSDC" style="color: red;"></span>
     </div>
