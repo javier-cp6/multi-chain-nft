@@ -74,7 +74,7 @@ contract PublicSale is
         else if(_id >= 500 && _id <= 699) {
             uint256 _basePrice = 10_000;
             uint256 _daysElapsed = (block.timestamp - startDate) / 86_400; 
-            _price = (_basePrice + (_daysElapsed * 20_000)) * 10 ** decimals();
+            _price = (_basePrice + (_daysElapsed * 2_000)) * 10 ** decimals();
             _price = _price <= MAX_PRICE_NFT ? _price : MAX_PRICE_NFT;
         }
         else if(_id >= 700 && _id <= 999) {
@@ -228,6 +228,6 @@ contract PublicSale is
     ////////////////////////////////////////////////////////////////////////
 
     function version() public pure returns (uint256) {
-        return 17;
+        return 18;
     }
 }
